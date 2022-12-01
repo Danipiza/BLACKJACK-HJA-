@@ -366,6 +366,20 @@ public class MainWindow extends JFrame {
 		VegasStrategyButton.setIcon(loadImage("resources/Strategies/VegasStrategy.png"));
 		tablero.add(VegasStrategyButton);
 		
+		JButton Vegas2StrategyButton = new JButton("BustItStrategy");
+		Vegas2StrategyButton.setBounds(1420, 850, 85, 53);
+		Vegas2StrategyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				vegas2Strategy();
+			}
+		});
+		Vegas2StrategyButton.setOpaque(true);
+		Vegas2StrategyButton.setContentAreaFilled(false);
+		Vegas2StrategyButton.setBorderPainted(false);
+		Vegas2StrategyButton.setIcon(loadImage("resources/Strategies/VegasStrategy.png"));
+		tablero.add(Vegas2StrategyButton);
+		
 		
 		add(tablero);
 		setSize(1713,1013); 
@@ -542,11 +556,13 @@ public class MainWindow extends JFrame {
 		for(int j = 0; j < n; j++) {
 			game.apuestasDinero[2] = aux;
 			
+			game.dinero();
 			game.repartirJugador();	
 			game.repartirDealer();
 			// NINGUNA CARTA AL JUGADOR
 			game.dealer();						
 			game.recompensas();
+			
 			
 			System.out.println("Iteracion " + (j+1));
 			System.out.print("Jugador: ");
@@ -589,6 +605,7 @@ public class MainWindow extends JFrame {
 		
 		for(int j = 0; j < n; j++) {
 			game.apuestasDinero[1] = x;
+			game.dinero();
 			
 			game.repartirJugador();	
 			game.repartirDealer();
@@ -641,10 +658,66 @@ public class MainWindow extends JFrame {
 	}
 	
 	
-	
-	// PEDIR CARTA SI LA SUMA DEL JUGADOR ES <= 11
-	
-	
+	private void vegas2Strategy() {
+		int n = 100;
+		int cartera = 10000;
+		
+		for(int j = 0; j < n; j++) {
+			game.apuestasDinero[0] = 2;			
+			game.apuestasDinero[1] = 6;
+			game.apuestasDinero[2] = 3;
+			game.apuestasDinero[3] = 1;			
+			
+			game.dinero();			
+			game.repartirJugador();	
+			game.repartirDealer();
+			
+			// ESTRATEGIA DE LAS VEGAS (TABLA QUE DICE CUANDO JUGAR)
+			if(game.sumaJugador <= 18 && (game.lJugador.get(0).getNValue() == 11 || 
+					game.lJugador.get(1).getNValue() == 11)) { // SOFT PAIR
+				while(game.sumaJugador <= 11) {
+					game.dameCarta();
+				}
+			}
+			else if(game.sumaJugador <= 11) { // HARD PAIR
+				while(game.sumaJugador <= 11) {
+					game.dameCarta();
+				}
+			}
+			 			
+			
+			game.dealer();						
+			game.recompensas();			
+			
+			System.out.println("Iteracion " + (j+1));
+			System.out.print("Jugador: ");
+			for(int i =0; i < 2; i++) {				
+				System.out.print(game.lJugador.get(i).getValue() + "("+ game.lJugador.get(i).getNValue() +")"+" ");
+			}
+			if (game.bjJugador) System.out.print(" BLACKJACK DEL JUGADOR");
+			System.out.println();
+			System.out.print("Dealer: ");
+			for(int i =0; i < game.lDealer.size(); i++) {
+				System.out.print(game.lDealer.get(i).getValue() + "("+ game.lDealer.get(i).getNValue() +")"+" ");
+			}
+			if (game.bjDealer) System.out.print(" BLACKJACK DEL DEALER");
+			System.out.println();
+			System.out.println("DINERO ACTUAL -> " + game.dineroGanado);
+			System.out.println("DINERO GASTADO EN ESTA TIRADA -> " + 12);
+			if(game.bustDealer || (game.bjJugador && !game.bjDealer) || game.ganaJugador) {
+				System.out.println("GANA EL JUGADOR");
+			}
+			else if(game.bustJugador|| (!game.bjJugador && game.bjDealer) || !game.ganaJugador) {
+				System.out.println("GANA EL DEALER");
+			}
+			else System.out.println("EMPATE");
+			System.out.println();
+			
+			game.reset();
+			
+		}
+		
+	}
 	
 	
 	

@@ -48,14 +48,14 @@ public class Game {
 	public boolean ganaJugador;
 	public boolean empate;
 	
-	public int[] apuestasDinero = {0, 0, 0, 0};
+	public int[] apuestasMoney = {0, 0, 0, 0};
 	
-	// CUANTO DINERO HA GANADO EN UNA EJECUCION
-	public double dineroGanado;
-	public double dineroGanadoIt;
-	public double dineroGastado;
+	// CUANTO money HA GANADO EN UNA EJECUCION
+	public double moneyGanado;
+	public double moneyGanadoIt;
+	public double moneyGastado;
 	
-	public double dineroMaximo;
+	public double moneyMaximo;
 	
 	private boolean aceJugador;
 	private boolean aceDealer;
@@ -80,10 +80,10 @@ public class Game {
 		
 		ganaJugador = false;
 		// CUANTO GANA 		
-		dineroGanado = 0;
-		dineroGastado = 0;
-		dineroGanadoIt = 0;
-		dineroMaximo = 0;
+		moneyGanado = 0;
+		moneyGastado = 0;
+		moneyGanadoIt = 0;
+		moneyMaximo = 0;
 		
 		aceJugador = false;
 		aceDealer = false;
@@ -254,8 +254,8 @@ public class Game {
 		bjDealer = false;
 		fin = false;		
 		ganaJugador = false;
-		dineroGastado = 0;
-		dineroGanadoIt = 0;
+		moneyGastado = 0;
+		moneyGanadoIt = 0;
 		empate = false;
 		aceDealer = false;
 		aceJugador = false;
@@ -266,48 +266,48 @@ public class Game {
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			apuestasDinero[i] = 0;
+			apuestasMoney[i] = 0;
 		}
 		
 	}	
 
-	public void dinero() {
+	public void money() {
 		for(int i = 0; i < 4;i++) {
-			dineroGastado += apuestasDinero[i];
+			moneyGastado += apuestasMoney[i];
 		}
 	}
 	
 	public void recompensas(){
 		
-		//dinero();
+		//money();
 		
 		// NORMAL: *2 (X2.5 BLACKJACK)		
-		if(apuestasDinero[1] > 0 && (ganaJugador || empate || bustDealer)){
+		if(apuestasMoney[1] > 0 && (ganaJugador || empate || bustDealer)){
 			double aux = 2;
 			if(bjJugador) aux = 2.5;			
 			if(empate) aux = 1;
-			dineroGanadoIt+=apuestasDinero[1]*aux;
+			moneyGanadoIt+=apuestasMoney[1]*aux;
 		}
 		// BUST-IT: *AUX
-		if(apuestasDinero[2] > 0 && bustDealer){
+		if(apuestasMoney[2] > 0 && bustDealer){
 			int aux = 2;
 			if(lDealer.size() == 4) aux = 3;
 			else if(lDealer.size() == 5) aux = 9;
 			else if(lDealer.size() == 6) aux = 26;
 			else if(lDealer.size() == 7) aux = 101;
-			dineroGanadoIt+=apuestasDinero[2]*aux;
+			moneyGanadoIt+=apuestasMoney[2]*aux;
 		}
 		// ANY PAIR *7
-		if(apuestasDinero[3] > 0 && anyPair){
-			dineroGanadoIt+=apuestasDinero[3]*7;
+		if(apuestasMoney[3] > 0 && anyPair){
+			moneyGanadoIt+=apuestasMoney[3]*7;
 		}
 		// HOT-3: *3
-		if(apuestasDinero[0] > 0 && hot3){
-			dineroGanadoIt+=apuestasDinero[0]*3;		
+		if(apuestasMoney[0] > 0 && hot3){
+			moneyGanadoIt+=apuestasMoney[0]*3;		
 		}
 		
-		dineroGanado += dineroGanadoIt;
-		dineroGanado -= dineroGastado;
+		moneyGanado += moneyGanadoIt;
+		moneyGanado -= moneyGastado;
 	}
 	
 	

@@ -16,7 +16,7 @@ public class Tablero extends JPanel {
 	public Tablero() {
 		setLayout(null);
 		try {
-			backgroundImage = ImageIO.read(new File("resources/Tablero.jpg"));
+			backgroundImage = ImageIO.read(new File("resources/Tablero.jpeg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,7 +24,8 @@ public class Tablero extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, null);
+        //g.drawImage(backgroundImage, 0, 0, null);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         
     }
     

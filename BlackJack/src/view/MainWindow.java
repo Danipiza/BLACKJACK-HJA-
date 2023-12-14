@@ -473,8 +473,8 @@ public class MainWindow extends JFrame {
 	
 	private void reset() {	
 		// ELIMINAR LAS CARTAS DEL JUGADOR DEL TABLERO
-		int tamaño = playerCards.size();
-		for(int i = 0; i < tamaño; i++) {	
+		int tam = playerCards.size();
+		for(int i = 0; i < tam; i++) {	
 			tablero.remove(playerCards.get(0));
 			playerCards.remove(0);
 			//JLabel aux = game.getPlayerCards().get(0).toImage();
@@ -482,7 +482,7 @@ public class MainWindow extends JFrame {
 		}
 		
 		// ELIMINAR LAS CARTAS DEL DEALER DEL TABLERO
-		tamaño = dealerCards.size();
+		tam = dealerCards.size();
 		for(int i = 0; i < game.lDealer.size()+1; i++) {
 			tablero.remove(dealerCards.get(0));
 			dealerCards.remove(0);
